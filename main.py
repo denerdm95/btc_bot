@@ -84,8 +84,8 @@ if __name__ == "__main__":
             if rsi_atual <= 30:
                 alerta = "30"
 
-            elif rsi_atual <= 50:
-                alerta = "50"
+            elif rsi_atual <= 40:
+                alerta = "40"
 
             elif rsi_atual >= 70:
                 alerta = "70"
