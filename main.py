@@ -40,10 +40,10 @@ def enviar_telegram(msg):
 
     requests.post(url, data=payload)
 
-keep_alive()
+if __name__ == "__main__":
+    keep_alive()
 
-while True:
-
+    while True:
     try:
 
         url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
