@@ -29,6 +29,7 @@ CHAT_ID = "8729665942"
 ULTIMO_ALERTA = None
 
 def enviar_telegram(msg):
+
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
     payload = {
@@ -52,7 +53,12 @@ if __name__ == "__main__":
 
             data = resposta.json()
 
-            closes = [float(candle[4]) for candle in data]
+            if isinstance(data, list) and len(data) > 0:
+                closes = [float(candle[4]) for candle in data if len(candle) > 4]
+            else:
+                print("Erro ao obter dados da Binance", flush=True)
+                time.sleep(60)
+                continue
 
             df = pd.DataFrame(closes, columns=["close"])
 
