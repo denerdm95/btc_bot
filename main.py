@@ -44,7 +44,7 @@ if __name__ == "__main__":
     keep_alive()
 
     while True:
-    try:
+        try:
 
         url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
 
