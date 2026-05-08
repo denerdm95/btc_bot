@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
         try:
 
-            url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
+            url = "https://api.binance.us/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
 
             resposta = requests.get(url)
 
