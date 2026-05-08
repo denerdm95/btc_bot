@@ -54,10 +54,19 @@ if __name__ == "__main__":
             data = resposta.json()
 
             if isinstance(data, list) and len(data) > 0:
-                closes = [float(candle[4]) for candle in data if len(candle) > 4]
+
+                closes = [
+                    float(candle[4])
+                    for candle in data
+                    if isinstance(candle, list) and len(candle) > 4
+                ]
+
             else:
+
                 print("Erro ao obter dados da Binance", flush=True)
+
                 time.sleep(60)
+
                 continue
 
             df = pd.DataFrame(closes, columns=["close"])
@@ -70,17 +79,21 @@ if __name__ == "__main__":
 
             alerta = None
 
+            # ===== ALERTAS =====
+
             if rsi_atual <= 30:
                 alerta = "30"
 
-            elif rsi_atual <= 40:
-                alerta = "40"
+            elif rsi_atual <= 50:
+                alerta = "50"
 
             elif rsi_atual >= 70:
                 alerta = "70"
 
             elif rsi_atual >= 60:
                 alerta = "60"
+
+            # ===================
 
             if alerta != ULTIMO_ALERTA and alerta is not None:
 
