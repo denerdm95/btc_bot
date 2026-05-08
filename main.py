@@ -59,7 +59,7 @@ while True:
 
         rsi_atual = round(rsi.iloc[-1], 2)
 
-        print(f"RSI atual: {rsi_atual}")
+        print(f"RSI atual: {rsi_atual}", flush=True)
 
         alerta = None
 
