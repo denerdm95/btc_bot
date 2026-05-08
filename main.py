@@ -1,5 +1,9 @@
 from flask import Flask
 from threading import Thread
+import requests
+import time
+import pandas as pd
+from ta.momentum import RSIIndicator
 
 app = Flask('')
 
@@ -15,11 +19,6 @@ def keep_alive():
     t.daemon = True
     t.start()
 
-import requests
-import time
-import pandas as pd
-from ta.momentum import RSIIndicator
-
 # ===== CONFIG =====
 
 TOKEN = "8041013756:AAHMnYZC2LHJ0VT3aRnVXZad5ILAsuQCv8k"
@@ -30,7 +29,6 @@ CHAT_ID = "8729665942"
 ULTIMO_ALERTA = None
 
 def enviar_telegram(msg):
-
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
     payload = {
@@ -41,9 +39,11 @@ def enviar_telegram(msg):
     requests.post(url, data=payload)
 
 if __name__ == "__main__":
+
     keep_alive()
 
     while True:
+
         try:
 
             url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
@@ -64,21 +64,21 @@ if __name__ == "__main__":
 
             alerta = None
 
-        if rsi_atual <= 30:
-            alerta = "30"
+            if rsi_atual <= 30:
+                alerta = "30"
 
-        elif rsi_atual <= 40:
-            alerta = "40"
+            elif rsi_atual <= 40:
+                alerta = "40"
 
-        elif rsi_atual >= 70:
-            alerta = "70"
+            elif rsi_atual >= 70:
+                alerta = "70"
 
-        elif rsi_atual >= 60:
-            alerta = "60"
+            elif rsi_atual >= 60:
+                alerta = "60"
 
-        if alerta != ULTIMO_ALERTA and alerta is not None:
+            if alerta != ULTIMO_ALERTA and alerta is not None:
 
-            mensagem = f"""
+                mensagem = f"""
 ⚠️ ALERTA RSI BTC 4H
 
 RSI cruzou {alerta}
@@ -86,16 +86,16 @@ RSI cruzou {alerta}
 RSI atual: {rsi_atual}
 """
 
-            enviar_telegram(mensagem)
+                enviar_telegram(mensagem)
 
-            print("ALERTA ENVIADO")
+                print("ALERTA ENVIADO", flush=True)
 
-            ULTIMO_ALERTA = alerta
+                ULTIMO_ALERTA = alerta
 
-        time.sleep(300)
+            time.sleep(300)
 
         except Exception as erro:
 
-            print("Erro:", erro)
+            print("Erro:", erro, flush=True)
 
             time.sleep(60)
