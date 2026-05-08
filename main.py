@@ -46,23 +46,23 @@ if __name__ == "__main__":
     while True:
         try:
 
-        url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
+            url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=200"
 
-        resposta = requests.get(url)
+            resposta = requests.get(url)
 
-        data = resposta.json()
+            data = resposta.json()
 
-        closes = [float(candle[4]) for candle in data]
+            closes = [float(candle[4]) for candle in data]
 
-        df = pd.DataFrame(closes, columns=["close"])
+            df = pd.DataFrame(closes, columns=["close"])
 
-        rsi = RSIIndicator(df["close"], window=14).rsi()
+            rsi = RSIIndicator(df["close"], window=14).rsi()
 
-        rsi_atual = round(rsi.iloc[-1], 2)
+            rsi_atual = round(rsi.iloc[-1], 2)
 
-        print(f"RSI atual: {rsi_atual}", flush=True)
+            print(f"RSI atual: {rsi_atual}", flush=True)
 
-        alerta = None
+            alerta = None
 
         if rsi_atual <= 30:
             alerta = "30"
